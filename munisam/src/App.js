@@ -1,11 +1,22 @@
 import React from 'react'
-import MainCategory from './components/MainCategory/MainCategory'
-import { categories } from './Data/categories'
+import { Routes, Route} from 'react-router-dom'
+import Home from './routes/home/Home'
+import Navigation from './routes/Navigation/Navigation'
+import Shop from './routes/Shop/Shop'
+import SignIn from './routes/Sign-In/SignIn'
+
 
  const App = () => {
-  console.log(categories)
   return (
-      <MainCategory categories = {categories} />
+    <Routes>
+      <Route path='/' element={<Navigation />}>
+        <Route index element={<Home />}/>
+        <Route path='shop' element={<Shop />}/>
+        <Route path='sign-in' element={<SignIn />}/>
+
+      </Route>
+      
+    </Routes>
     )
 }
 
