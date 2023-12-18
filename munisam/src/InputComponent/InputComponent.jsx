@@ -1,13 +1,20 @@
+import React from 'react';
 import './InputComponent.scss';
 
-const InputComponent = ({ label, ...otherProps }) => {
+const InputComponent = ({ label, value, ...otherProps }) => {
+  const isControlled = value !== undefined;
+
   return (
     <div className='group'>
-      <input className='form-input' {...otherProps} />
+      <input
+        className='form-input'
+        value={isControlled ? value : ''}
+        {...otherProps}
+      />
       {label && (
         <label
           className={`${
-            otherProps.length ? 'shrink' : ''
+            isControlled && value.length ? 'shrink' : ''
           } form-input-label`}
         >
           {label}
