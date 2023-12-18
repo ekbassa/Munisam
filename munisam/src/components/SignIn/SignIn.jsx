@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import InputComponent from "../../InputComponent/InputComponent";
 import ButtonComponent from "../button/buttonComponent";
 import "./SignIn.scss";
-import { signInWithGooglePopup,signInAuthUserWithEmailAndPassword } from "../../Utils/firebase/firebase.utils";
+import {
+  signInWithGooglePopup,
+  signInAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../Utils/firebase/firebase.utils";
 
 const defaultFormFields = {
   email: "",
@@ -13,33 +17,41 @@ const SignIn = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+  // using the UserContext
+  const clearformFields = () => {
+    setFormFields(defaultFormFields);
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
+    await signInWithGooglePopup();
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(email, password);
-      console.log(response)
+      await signInAuthUserWithEmailAndPassword(email, password);
 
+      clearformFields();
     } catch (error) {
-      switch(error.code){
-        case 'auth/wrong-password':
-        alert('incorrect password or email' )
-        break;
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("incorrect password or email");
+          break;
 
-        case 'auth/user-not-found':
-          alert('no user associated with this email' )
+        case "auth/user-not-found":
+          alert("no user associated with this email");
+          break;
+        case 'auth/invalid-credential':
+          alert('To log in, please sign up first. The user does not exist');
           break;
         default:
-          console.log(error);  
+          console.log(error);
       }
     }
   };
@@ -68,8 +80,12 @@ const SignIn = () => {
 
         <div className="buttons-container">
           <ButtonComponent type="submit">Sign In </ButtonComponent>
-          <ButtonComponent type='button'  buttonType="google" onClick={signInWithGoogle}>
-            Google sign in{" "}
+          <ButtonComponent
+            type="button"
+            buttonType="google"
+            onClick={signInWithGoogle}
+          >
+            Sign In With Google
           </ButtonComponent>
         </div>
       </form>
