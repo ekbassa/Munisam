@@ -1,7 +1,8 @@
 import React from "react";
 import { useState,useContext } from "react";
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth} from "../../Utils/firebase/firebase.utils";
-import InputComponent from "../../InputComponent/InputComponent";
+// import InputComponent from "../../InputComponent/InputComponent";
+import InputComponent from '../InputComponent/InputComponent'
 import './SingUpForm.scss'
 import ButtonComponent from "../button/buttonComponent";
 import { UserContext } from "../../contexts/UserContext";

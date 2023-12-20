@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import InputComponent from "../../InputComponent/InputComponent";
+// import InputComponent from "../../InputComponent/InputComponent";
+import InputComponent from "../InputComponent/InputComponent";
 import ButtonComponent from "../button/buttonComponent";
 import "./SignIn.scss";
 import {
